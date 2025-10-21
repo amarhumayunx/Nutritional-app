@@ -2,6 +2,7 @@ import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:liquid_glass_renderer/liquid_glass_renderer.dart';
 import 'glass_card.dart';
 
 void main() {
@@ -96,10 +97,7 @@ class NutritionTrackerHome extends StatelessWidget {
               right: 0,
               child: SafeArea(
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 16,
-                    vertical: 12,
-                  ),
+                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -110,7 +108,7 @@ class NutritionTrackerHome extends StatelessWidget {
                           fontWeight: FontWeight.w600,
                         ),
                       ),
-                      const GlassIconChip(
+                      const GlassIconChipButton(
                         icon: Icon(Icons.menu, color: Colors.white, size: 24),
                         size: 45,
                       ),
@@ -1417,6 +1415,42 @@ class GlassIconChip extends StatelessWidget {
           height: size,
           child: Center(child: icon),
         ),
+      ),
+    );
+  }
+}
+
+class GlassIconChipButton extends StatelessWidget {
+  final Icon icon;
+  final double size;
+
+  const GlassIconChipButton({
+    super.key,
+    required this.icon,
+    this.size = 45,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: size,
+      width: size,
+      child: LiquidGlass(
+        shape: LiquidOval(),
+        glassContainsChild: false,
+        clipBehavior: Clip.antiAlias,
+        restrictThickness: true,
+        settings: const LiquidGlassSettings(
+          thickness: 10,
+          glassColor: Color(0x1AFFFFFF),
+          lightAngle: 0.7,
+          lightIntensity: 1.8,
+          ambientStrength: 0.7,
+          blend: 50,
+          refractiveIndex: 2.4,
+          chromaticAberration: 0.2,
+        ),
+        child: Center(child: icon),
       ),
     );
   }
